@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sorting Algorithms Comparison</title>
+
+<style>
+    body {
+        font-family: Arial;
+        text-align: center;
+        background: #f4f5a7;
+    }
+
+    h1 {
+        margin: 20px;
+    }
+
+    input {
+        padding: 10px;
+        width: 320px;
+        font-size: 16px;
+    }
+
+    button {
+        padding: 10px 15px;
+        margin: 15px;
+        background: #34db45;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background: #2980b9;
+    }
+
+    table {
+        margin: 30px auto;
+        border-collapse: collapse;
+        width: 70%;
+    }
+
+    th, td {
+        padding: 12px;
+        border: 1px solid #000000;
+    }
+
+    th {
+        background: #3b3936;
+        color: white;
+    }
+
+    #bestAlgo {
+        margin-top: 25px;
+        font-size: 22px;
+        color: green;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Sorting Comparison</h1>
+
+<input type="text" id="arrayInput" placeholder="Enter Array">
+<br>
+<button onclick="compare()">Compare Algorithms</button>
+
+<h3 id="arrayDisplay"></h3>
+
+<table>
+<tr>
+<th>Algorithm</th>
+<th>Time Taken (ms)</th>
+<th>Best</th>
+<th>Average</th>
+<th>Worst</th>
+</tr>
+
+<tr>
+<td>Bubble Sort</td>
+<td id="bubbleTime">-</td>
+<td>O(n)</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+</tr>
+
+<tr>
+<td>Merge Sort</td>
+<td id="mergeTime">-</td>
+<td>O(n log n)</td>
+<td>O(n log n)</td>
+<td>O(n log n)</td>
+</tr>
+
+<tr>
+<td>Quick Sort</td>
+<td id="quickTime">-</td>
+<td>O(n log n)</td>
+<td>O(n log n)</td>
+<td>O(n²)</td>
+</tr>
+</table>
+
+<h2 id="bestAlgo"></h2>
+
+<script>
+
+function getInputArray() {
+    let input = document.getElementById("arrayInput").value;
+
+    if (input.trim() === "") {
+        alert("Please enter numbers!");
+        return null;
+    }
+
+    let arr = input.split(",").map(Number);
+
+    document.getElementById("arrayDisplay").innerText =
+        "Input Array: " + arr.join(", ");
+
+    return arr;
+}
+
+function expandArray(arr) {
+    let expanded = [];
+    for (let i = 0; i < 50; i++) {
+        expanded = expanded.concat(arr);
+    }
+    return expanded;
+}
+
+function bubbleSort(arr) {
+    let a = [...arr];
+    for (let i = 0; i < a.length; i++) {
+        for (let j = 0; j < a.length - i - 1; j++) {
+            if (a[j] > a[j+1]) {
+                [a[j], a[j+1]] = [a[j+1], a[j]];
+            }
+        }
+    }
+}
+
+function mergeSort(arr) {
+    if (arr.length <= 1) return arr;
+
+    let mid = Math.floor(arr.length / 2);
+    let left = mergeSort(arr.slice(0, mid));
+    let right = mergeSort(arr.slice(mid));
+
+    return merge(left, right);
+}
+
+function merge(left, right) {
+    let result = [];
+    while (left.length && right.length) {
+        result.push(left[0] < right[0] ? left.shift() : right.shift());
+    }
+    return [...result, ...left, ...right];
+}
+
+function quickSort(arr) {
+    if (arr.length <= 1) return arr;
+
+    let pivot = arr[arr.length - 1];
+    let left = [], right = [];
+
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i] < pivot) left.push(arr[i]);
+        else right.push(arr[i]);
+    }
+
+    return [...quickSort(left), pivot, ...quickSort(right)];
+}
+
+function compare() {
+    let input = getInputArray();
+    if (!input) return;
+
+    let testArray = expandArray(input);
+    let iterations = 1000;
+
+    let times = {};
+    let start, end;
+
+    start = performance.now();
+    for (let i = 0; i < iterations; i++) {
+        bubbleSort(testArray);
+    }
+    end = performance.now();
+    times["Bubble Sort"] = (end - start) / iterations;
+
+    start = performance.now();
+    for (let i = 0; i < iterations; i++) {
+        mergeSort(testArray);
+    }
+    end = performance.now();
+    times["Merge Sort"] = (end - start) / iterations;
+
+    start = performance.now();
+    for (let i = 0; i < iterations; i++) {
+        quickSort(testArray);
+    }
+    end = performance.now();
+    times["Quick Sort"] = (end - start) / iterations;
+
+    document.getElementById("bubbleTime").innerText = times["Bubble Sort"].toFixed(4);
+    document.getElementById("mergeTime").innerText = times["Merge Sort"].toFixed(4);
+    document.getElementById("quickTime").innerText = times["Quick Sort"].toFixed(4);
+
+    let best = Object.keys(times).reduce((a, b) =>
+        times[a] < times[b] ? a : b
+    );
+
+    document.getElementById("bestAlgo").innerText =
+        "🏆 Best Performing Algorithm: " + best +
+        " (" + times[best].toFixed(4) + " ms)";
+}
+
+</script>
+
+</body>
+</html>
