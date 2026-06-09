@@ -2,143 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sorting Algorithms Comparison</title>
 
 <style>
     body {
-        font-family: Arial;
+        font-family: Arial, sans-serif;
         text-align: center;
         background: #f4f5a7;
-    }
-
-    h1 {
-        margin: 20px;
-    }
-
-    input {
-        padding: 10px;
-        width: 320px;
-        font-size: 16px;
-    }
-
-    button {
-        padding: 10px 15px;
-        margin: 15px;
-        background: #34db45;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    button:hover {
-        background: #2980b9;
-    }
-
-    table {
-        margin: 30px auto;
-        border-collapse: collapse;
-        width: 70%;
-    }
-
-    th, td {
-        padding: 12px;
-        border: 1px solid #000000;
-    }
-
-    th {
-        background: #3b3936;
-        color: white;
-    }
-
-    #bestAlgo {
-        margin-top: 25px;
-        font-size: 22px;
-        color: green;
+        padding: 20px;
     }
 </style>
-</head>
-
 <body>
-
-<h1>Sorting Comparison</h1>
-<input type="text" id="arrayInput" placeholder="Enter Array">
-<br>
-<button onclick="compare()">Compare Algorithms</button>
-
-<h3 id="arrayDisplay"></h3>
-<table>
-<tr>
-<th>Algorithm</th>
-<th>Time Taken (ms)</th>
-<th>Best</th>
-<th>Average</th>
-<th>Worst</th>
-</tr>
-
-<tr>
-<td>Bubble Sort</td>
-<td id="bubbleTime">-</td>
-<td>O(n)</td>
-<td>O(n²)</td>
-<td>O(n²)</td>
-</tr>
-
-<tr>
-<td>Merge Sort</td>
-<td id="mergeTime">-</td>
-<td>O(n log n)</td>
-<td>O(n log n)</td>
-<td>O(n log n)</td>
-</tr>
-
-<tr>
-<td>Quick Sort</td>
-<td id="quickTime">-</td>
-<td>O(n log n)</td>
-<td>O(n log n)</td>
-<td>O(n²)</td>
-</tr>
-</table>
-<h2 id="bestAlgo"></h2>
-
-<script>
-
-function getInputArray() {
-    let input = document.getElementById("arrayInput").value;
-
-    if (input.trim() === "") {
-        alert("Please enter numbers!");
-        return null;
-    }
-
-    let arr = input.split(",").map(Number);
-
-    document.getElementById("arrayDisplay").innerText =
-        "Input Array: " + arr.join(", ");
-
-    return arr;
-}
-
-function expandArray(arr) {
-    let expanded = [];
-    for (let i = 0; i < 50; i++) {
-        expanded = expanded.concat(arr);
-    }
-    return expanded;
-}
-
-function bubbleSort(arr) {
-    let a = [...arr];
-    for (let i = 0; i < a.length; i++) {
-        for (let j = 0; j < a.length - i - 1; j++) {
-            if (a[j] > a[j+1]) {
-                [a[j], a[j+1]] = [a[j+1], a[j]];
-            }
-        }
-    }
-}
-    
-</script>    
+    <h1>Sorting Algorithms Comparison</h1>
 </body>
 </html>
