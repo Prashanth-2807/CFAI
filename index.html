@@ -245,6 +245,66 @@
         
             return a;
         }
+        function countingSort(arr) {
+            let max = Math.max(...arr);
+            let min = Math.min(...arr);
+        
+            let count = Array(max - min + 1).fill(0);
+        
+            for (let num of arr) {
+                count[num - min]++;
+            }
+        
+            let result = [];
+        
+            for (let i = 0; i < count.length; i++) {
+                while (count[i] > 0) {
+                    result.push(i + min);
+                    count[i]--;
+                }
+            }
+        
+            return result;
+        }
+        
+        function countingSortForRadix(arr, exp) {
+            let output = new Array(arr.length);
+            let count = new Array(10).fill(0);
+        
+            for (let i = 0; i < arr.length; i++) {
+                count[Math.floor(arr[i] / exp) % 10]++;
+            }
+        
+            for (let i = 1; i < 10; i++) {
+                count[i] += count[i - 1];
+            }
+        
+            for (let i = arr.length - 1; i >= 0; i--) {
+                let index = Math.floor(arr[i] / exp) % 10;
+        
+                output[count[index] - 1] = arr[i];
+                count[index]--;
+            }
+        
+            return output;
+        }
+        
+        function radixSort(arr) {
+            let a = [...arr];
+        
+            let max = Math.max(...a);
+        
+            for (
+                let exp = 1;
+                Math.floor(max / exp) > 0;
+                exp *= 10
+            ) {
+                a = countingSortForRadix(a, exp);
+            }
+        
+            return a;
+        }
+        
 
     </script>
     
