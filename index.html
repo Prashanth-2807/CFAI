@@ -95,6 +95,27 @@
     </table>
     
     <h2 id="bestAlgo"></h2>
+
+    <script>
+
+        function getInputArray() {
+            let input = document.getElementById("arrayInput").value;
+        
+            if (input.trim() === "") {
+                alert("Please enter numbers!");
+                return null;
+            }
+        
+            let arr = input.split(",").map(num => Number(num.trim()));
+        
+            if (arr.some(isNaN)) {
+                alert("Please enter valid numbers separated by commas.");
+                return null;
+            }
+        
+            return arr;
+        }
+    </script>
     
 </body>
 </html>
