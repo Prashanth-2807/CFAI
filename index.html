@@ -304,7 +304,97 @@
         
             return a;
         }
+        function compare() {
+
+            let input = getInputArray();
         
+            if (!input) return;
+        
+            let testArray = expandArray(input);
+        
+            let iterations = 1000;
+        
+            let times = {};
+        
+            let start, end;
+        
+            start = performance.now();
+            for (let i = 0; i < iterations; i++) bubbleSort(testArray);
+            end = performance.now();
+            times["Bubble Sort"] = (end - start) / iterations;
+        
+            start = performance.now();
+            for (let i = 0; i < iterations; i++) selectionSort(testArray);
+            end = performance.now();
+            times["Selection Sort"] = (end - start) / iterations;
+        
+            start = performance.now();
+            for (let i = 0; i < iterations; i++) insertionSort(testArray);
+            end = performance.now();
+            times["Insertion Sort"] = (end - start) / iterations;
+        
+            start = performance.now();
+            for (let i = 0; i < iterations; i++) mergeSort(testArray);
+            end = performance.now();
+            times["Merge Sort"] = (end - start) / iterations;
+        
+            start = performance.now();
+            for (let i = 0; i < iterations; i++) quickSort(testArray);
+            end = performance.now();
+            times["Quick Sort"] = (end - start) / iterations;
+        
+            start = performance.now();
+            for (let i = 0; i < iterations; i++) heapSort(testArray);
+            end = performance.now();
+            times["Heap Sort"] = (end - start) / iterations;
+        
+            start = performance.now();
+            for (let i = 0; i < iterations; i++) countingSort(testArray);
+            end = performance.now();
+            times["Counting Sort"] = (end - start) / iterations;
+        
+            start = performance.now();
+            for (let i = 0; i < iterations; i++) radixSort(testArray);
+            end = performance.now();
+            times["Radix Sort"] = (end - start) / iterations;
+        
+            document.getElementById("bubbleTime").innerText =
+            times["Bubble Sort"].toFixed(4);
+        
+            document.getElementById("selectionTime").innerText =
+            times["Selection Sort"].toFixed(4);
+        
+            document.getElementById("insertionTime").innerText =
+            times["Insertion Sort"].toFixed(4);
+        
+            document.getElementById("mergeTime").innerText =
+            times["Merge Sort"].toFixed(4);
+        
+            document.getElementById("quickTime").innerText =
+            times["Quick Sort"].toFixed(4);
+        
+            document.getElementById("heapTime").innerText =
+            times["Heap Sort"].toFixed(4);
+        
+            document.getElementById("countingTime").innerText =
+            times["Counting Sort"].toFixed(4);
+        
+            document.getElementById("radixTime").innerText =
+            times["Radix Sort"].toFixed(4);
+        
+            let best = Object.keys(times).reduce((a, b) =>
+                times[a] < times[b] ? a : b
+            );
+        
+            document.getElementById("bestAlgo").innerHTML =
+                "Best Performing Algorithm: " +
+                best +
+                " (" +
+                times[best].toFixed(4) +
+                " ms)" +
+                "<br><br>" +
+                "Fastest Theoretical Time Complexity: O(n + k) (Counting Sort)";
+        }
 
     </script>
     
